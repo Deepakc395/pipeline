@@ -11,9 +11,14 @@ pipeline {
             git branch: 'master', credentialsId: 'GITHUB_CREDS', url: 'https://github.com/kul-samples/java_sample_webapp.git'
           }
         }
-       stage('Build Package') {
+    stage('Build Package') {
   steps {
     sh 'mvn clean package'
+  }
+  post {
+    always {
+      archive 'target/devops.war'
+    }
   }
 }
        
