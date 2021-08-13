@@ -2,12 +2,21 @@ pipeline {
    agent {
   label 'linux'
 }
+   tools {
+  maven 'mvn_3.8.1'
+}
     stages {
         stage ('Checkout Java Code'){
           steps{
             git branch: 'master', credentialsId: 'GITHUB_CREDS', url: 'https://github.com/kul-samples/java_sample_webapp.git'
           }
         }
+       stage('Build Package') {
+  steps {
+    sh 'mvn clean package'
+  }
+}
+       
         stage('Hello') {
             steps {
                 echo 'Hello World'
